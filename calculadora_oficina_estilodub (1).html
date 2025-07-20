@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Oficina EstiloDUB</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0e0e0e;
+      color: #ffffff;
+      padding: 20px;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo img {
+      max-width: 400px;
+      height: auto;
+    }
+    .section {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    h2 {
+      color: #00c8ff;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin: 6px 0;
+    }
+    select, input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    button {
+      background-color: #00d9ff;
+      color: #000;
+      padding: 10px 25px;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #00aabb;
+    }
+    .resultado {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ff99;
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="/mnt/data/estilo.png" alt="EstiloDUB Logo">
+  </div>
+
+  <form id="form">
+    <div class="section">
+      <h2>Serviços Fixos</h2>
+      <label><input type="checkbox" value="150000" class="servico"> Remap</label>
+      <label><input type="checkbox" value="150000" class="servico"> Cambagem</label>
+      <label><input type="checkbox" value="150000" class="servico"> Suspensão a Ar</label>
+      <label><input type="checkbox" value="100000" class="servico"> Turbo Importado</label>
+    </div>
+
+    <div class="section">
+      <h2>Freio</h2>
+      <select class="nivel" data-precos="0,20000,40000,60000">
+        <option value="0">Nenhum</option>
+        <option value="1">Lvl 1</option>
+        <option value="2">Lvl 2</option>
+        <option value="3">Lvl 3</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Motor</h2>
+      <select class="nivel" data-precos="0,20000,40000,60000,80000">
+        <option value="0">Nenhum</option>
+        <option value="1">Lvl 1</option>
+        <option value="2">Lvl 2</option>
+        <option value="3">Lvl 3</option>
+        <option value="4">Lvl 4</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Suspensão</h2>
+      <select class="nivel" data-precos="0,20000,40000,60000,80000">
+        <option value="0">Nenhum</option>
+        <option value="1">Lvl 1</option>
+        <option value="2">Lvl 2</option>
+        <option value="3">Lvl 3</option>
+        <option value="4">Lvl 4</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Blindagem</h2>
+      <label><input type="checkbox" value="50000" class="servico"> 60%</label>
+      <label><input type="checkbox" value="80000" class="servico"> 80%</label>
+      <label><input type="checkbox" value="100000" class="servico"> 100%</label>
+    </div>
+
+    <div class="section">
+      <h2>Full Tuning</h2>
+      <select id="fullTuning">
+        <option value="0">Nenhum</option>
+        <option value="180000">Popular - Carro/Moto</option>
+        <option value="230000">Popular - c/ Blindagem</option>
+        <option value="200000">VIP - Carro/Moto</option>
+        <option value="250000">VIP - c/ Blindagem</option>
+        <option value="250000">Exclusivo</option>
+        <option value="280000">Exclusivo - c/ Blindagem</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>Reparos</h2>
+      <label><input type="checkbox" value="5000" class="servico"> Kit Reparo</label>
+      <label><input type="checkbox" value="5000" class="servico"> Dentro da Oficina</label>
+      <label><input type="checkbox" value="15000" class="servico"> Fora da Oficina</label>
+      <label><input type="checkbox" value="25000" class="servico"> No Norte</label>
+      <label><input type="checkbox" value="40000" class="servico"> Capotado</label>
+    </div>
+
+    <div class="section">
+      <h2>Helicóptero</h2>
+      <label><input type="checkbox" value="500000" class="servico"> Full Tuning</label>
+      <label><input type="checkbox" value="120000" class="servico"> Turbo</label>
+      <label><input type="checkbox" value="100000" class="servico"> Blindagem 20%</label>
+      <label><input type="checkbox" value="150000" class="servico"> Blindagem 40%</label>
+      <label><input type="checkbox" value="200000" class="servico"> Blindagem 60%</label>
+      <label><input type="checkbox" value="250000" class="servico"> Blindagem 80%</label>
+      <label><input type="checkbox" value="300000" class="servico"> Blindagem 100%</label>
+    </div>
+
+    <div style="text-align:center">
+      <button type="button" onclick="calcularTotal()">Calcular</button>
+      <button type="reset" onclick="resetarTotal()">Apagar</button>
+    </div>
+
+    <div class="resultado" id="resultado">Total: R$ 0</div>
+  </form>
+
+  <script>
+    function calcularTotal() {
+      let total = 0;
+      document.querySelectorAll('.servico:checked').forEach(el => total += parseInt(el.value));
+      document.querySelectorAll('.nivel').forEach(select => {
+        const precos = select.dataset.precos.split(',');
+        total += parseInt(precos[parseInt(select.value)]);
+      });
+      total += parseInt(document.getElementById('fullTuning').value);
+      document.getElementById('resultado').innerText = 'Total: R$ ' + total.toLocaleString();
+    }
+
+    function resetarTotal() {
+      document.getElementById('resultado').innerText = 'Total: R$ 0';
+    }
+  </script>
+
+</body>
+</html>
